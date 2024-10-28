@@ -36,6 +36,7 @@ const AddExpenseForm = () => {
             type="text"
             className="form-control"
             id="name"
+            data-testid='expense-name'
             value={name}
             onChange={(event) => setName(event.target.value)}
           ></input>
@@ -47,6 +48,7 @@ const AddExpenseForm = () => {
             type="text"
             className="form-control"
             id="cost"
+            data-testid='expense-cost'
             value={cost}
             onChange={(event) => setCost(Number(event.target.value))}
           ></input>
