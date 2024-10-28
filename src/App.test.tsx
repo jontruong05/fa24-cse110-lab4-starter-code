@@ -1,6 +1,9 @@
 import React from 'react';
 import { render, screen, fireEvent, within } from '@testing-library/react';
 import App from './App';
+import { v4 as uuidv4 } from 'uuid';
+
+
 
 test('test expense deletion', () => {
   render(<App />);
@@ -46,3 +49,62 @@ test('budget balance verification', () => {
 
   
 });
+
+function makeName(length: number) {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
+}
+function randomNumber() {
+  // 👇️ Get the number between min (inclusive) and max (inclusive)
+  return Math.floor(Math.random() * (100000 - 0 + 1)) + 0;
+}
+
+describe("Create an Expense", () => {
+  test("Checking Expenses", () => {
+    render(<App/>)
+    const nameInput = screen.getByTestId('expense-name')
+    const costInput = screen.getByTestId('expense-cost')
+    const createExpense = screen.getByText("Save")
+    
+    const name = makeName(10)
+    const cost = randomNumber()
+    fireEvent.change(nameInput, {target:{value:name}})
+    fireEvent.change(costInput, {target:{value:cost}})
+    fireEvent.click(createExpense)
+
+
+    const newName = screen.getByText(name)
+    const newCost = screen.getByText('$' + cost)
+   
+    expect(newName).toBeInTheDocument()
+    expect(newCost).toBeInTheDocument()
+  })
+
+  test("Checking Budget, Remaining, and TotalExpenses", ()=>{
+    render(<App/>)
+
+    const nameInput = screen.getByTestId('expense-name')
+    const costInput = screen.getByTestId('expense-cost')
+    const createExpense = screen.getByText("Save")
+
+    const name = makeName(10)
+    const cost = randomNumber()
+    fireEvent.change(nameInput, {target:{value:name}})
+    fireEvent.change(costInput, {target:{value:cost}})
+
+    fireEvent.click(createExpense)
+
+
+    const budget = screen.getByTestId('budget').innerHTML.substring(9);
+    const remaining = screen.getByTestId('remaining').innerHTML.substring(12)
+    const totalExpenses = screen.getByTestId('totalExpenses').innerHTML.substring(15)
+    expect(Number(remaining)).toBe(Number(budget) - Number(totalExpenses))
+  })
+})
