@@ -105,6 +105,68 @@ describe("Create an Expense", () => {
     const budget = screen.getByTestId('budget').innerHTML.substring(9);
     const remaining = screen.getByTestId('remaining').innerHTML.substring(12)
     const totalExpenses = screen.getByTestId('totalExpenses').innerHTML.substring(15)
-    expect(Number(remaining)).toBe(Number(budget) - Number(totalExpenses))
+    expect(Number(budget)).toBe(Number(remaining) + Number(totalExpenses))
   })
+})
+
+test("Budget Balance Verification", ()=> {
+  render(<App/>)
+  const nameInput = screen.getByTestId('expense-name')
+  const costInput = screen.getByTestId('expense-cost')
+  const createExpense = screen.getByText("Save")
+
+  let name = makeName(10)
+  let cost = randomNumber()
+
+  fireEvent.change(nameInput, {target:{value:name}})
+  fireEvent.change(costInput, {target:{value:cost}})
+  fireEvent.click(createExpense)
+
+  let budget = screen.getByTestId('budget').innerHTML.substring(9);
+  let remaining = screen.getByTestId('remaining').innerHTML.substring(12)
+  let totalExpenses = screen.getByTestId('totalExpenses').innerHTML.substring(15)
+  expect(Number(budget)).toBe(Number(remaining) + Number(totalExpenses))
+
+  name = makeName(10)
+  cost = randomNumber()
+
+  fireEvent.change(nameInput, {target:{value:name}})
+  fireEvent.change(costInput, {target:{value:cost}})
+  fireEvent.click(createExpense)
+
+  budget = screen.getByTestId('budget').innerHTML.substring(9);
+  remaining = screen.getByTestId('remaining').innerHTML.substring(12)
+  totalExpenses = screen.getByTestId('totalExpenses').innerHTML.substring(15)
+  expect(Number(budget)).toBe(Number(remaining) + Number(totalExpenses))
+
+  name = makeName(10)
+  cost = randomNumber()
+
+  fireEvent.change(nameInput, {target:{value:name}})
+  fireEvent.change(costInput, {target:{value:cost}})
+  fireEvent.click(createExpense)
+
+  budget = screen.getByTestId('budget').innerHTML.substring(9);
+  remaining = screen.getByTestId('remaining').innerHTML.substring(12)
+  totalExpenses = screen.getByTestId('totalExpenses').innerHTML.substring(15)
+  expect(Number(budget)).toBe(Number(remaining) + Number(totalExpenses))
+
+  const deleteButton = screen.getAllByRole('button', { name: /x/i });
+  fireEvent.click(deleteButton[1]);
+  budget = screen.getByTestId('budget').innerHTML.substring(9);
+  remaining = screen.getByTestId('remaining').innerHTML.substring(12)
+  totalExpenses = screen.getByTestId('totalExpenses').innerHTML.substring(15)
+  expect(Number(budget)).toBe(Number(remaining) + Number(totalExpenses))
+
+  fireEvent.click(deleteButton[1]);
+  budget = screen.getByTestId('budget').innerHTML.substring(9);
+  remaining = screen.getByTestId('remaining').innerHTML.substring(12)
+  totalExpenses = screen.getByTestId('totalExpenses').innerHTML.substring(15)
+  expect(Number(budget)).toBe(Number(remaining) + Number(totalExpenses))
+
+  fireEvent.click(deleteButton[0]);
+  budget = screen.getByTestId('budget').innerHTML.substring(9);
+  remaining = screen.getByTestId('remaining').innerHTML.substring(12)
+  totalExpenses = screen.getByTestId('totalExpenses').innerHTML.substring(15)
+  expect(Number(budget)).toBe(Number(remaining) + Number(totalExpenses))
 })
