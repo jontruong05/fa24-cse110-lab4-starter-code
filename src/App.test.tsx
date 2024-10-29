@@ -105,6 +105,7 @@ describe("Create an Expense", () => {
     const budget = screen.getByTestId('budget').innerHTML.substring(9);
     const remaining = screen.getByTestId('remaining').innerHTML.substring(12)
     const totalExpenses = screen.getByTestId('totalExpenses').innerHTML.substring(15)
+    expect(Number(totalExpenses)).toBe(Number(cost))
     expect(Number(budget)).toBe(Number(remaining) + Number(totalExpenses))
   })
 })
