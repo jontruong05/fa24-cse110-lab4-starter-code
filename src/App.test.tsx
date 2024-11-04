@@ -18,7 +18,7 @@ test('test expense deletion', () => {
 
   // Create an expense for bananas that cost $7
   fireEvent.change(itemName, {target: {value: 'Bananas'}});
-  fireEvent.change(itemCost, {target: {value: 8}})
+  fireEvent.change(itemCost, {target: {value: 7}})
   fireEvent.click(save);
 
   // Remove apples from the expense list
