@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import { AppContext } from '../../context/AppContext';
 import { Expense } from '../../types/types';
 import { createExpense } from "../../utils/expense-utils";
-import { v4 as uuidv4 } from 'uuid';
 
 const AddExpenseForm = () => {
 
@@ -17,7 +16,7 @@ const AddExpenseForm = () => {
 
     // Exercise: Add add new expense to expenses context array
     const newExpense: Expense = {
-      id: uuidv4(), // Generate a unique ID
+      id: String(Math.floor(Math.random() * 1000000000)), // Generate a unique ID
       description: name,
       cost,
     };

@@ -1,4 +1,4 @@
-import { Response } from "express";
+import { Request, Response } from "express";
 import { createBudgetEndpoints } from "./budget/budget-endpoints";
 import { createExpenseEndpoints } from "./expenses/expense-endpoints";
 import { budget } from "./constants";
@@ -23,7 +23,7 @@ app.listen(port, () => {
  const db = await initDB();
 
  // Root endpoint to get test if the server is running
- app.get("/", (res: Response) => {
+ app.get("/", (req: Request, res: Response) => {
    res.send({ "data": "Hello, TypeScript Express!" });
    res.status(200);
  });
